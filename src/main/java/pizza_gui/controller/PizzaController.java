@@ -1,5 +1,7 @@
 package pizza_gui.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -7,23 +9,51 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import pizza_gui.model.Ingredient;
+import pizza_gui.model.Pizza;
+import pizza_gui.model.PizzaModel;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class PizzaController {
 
-    @FXML
-    private TableView<?> tblPizza;
+        // Aby dodać kolekcje kontrolek FXML korzystamy z ObservableList
+    private ObservableList<PizzaModel> pizzas = FXCollections.observableArrayList();
+
+    // Wprowadź pizze z enum Pizza do listy pizzas------------------------------------
+
+    private void addPizzas(){
+        // type -> WEGE lub SPICY
+        for (Pizza pizza : Pizza.values()){
+            pizzas.add(new PizzaModel(
+                    pizza.getName(),
+                    pizza.getIngredients().stream().map(Ingredient::getName).collect(Collectors.joining(",")),
+                    (pizza.getIngredients().stream().anyMatch(Ingredient::isSpicy) ? "ostra " : " ")
+                            +
+                    (pizza.getIngredients().stream().noneMatch(Ingredient::isMeat) ? "wege " : " "),
+                    pizza.getIngredients().stream().mapToDouble(Ingredient::getPrice).sum()
+            ));
+        }
+    }
+
+
+    //--------------------------------------------------------------------------------
 
     @FXML
-    private TableColumn<?, ?> tcName;
+    private TableView<PizzaModel> tblPizza;                 // Klasa modelu
 
     @FXML
-    private TableColumn<?, ?> tcIngredients;
+    private TableColumn<PizzaModel, String> tcName;             // Klasa modelu, typ danych
 
     @FXML
-    private TableColumn<?, ?> tcType;
+    private TableColumn<PizzaModel, String> tcIngredients;
 
     @FXML
-    private TableColumn<?, ?> tcPrice;
+    private TableColumn<PizzaModel, String> tcType;
+
+    @FXML
+    private TableColumn<PizzaModel, Double> tcPrice;
 
     @FXML
     private Label lblRandomPizza;
@@ -39,12 +69,12 @@ public class PizzaController {
 
     @FXML
     void clearAction(MouseEvent event) {
-
+        System.out.println("Dziękujemy za złożenie zamówienia!");
     }
 
     @FXML
     void orderAction(MouseEvent event) {
-
+        System.out.println("Koszyk wyczyszczony");
     }
 
 }

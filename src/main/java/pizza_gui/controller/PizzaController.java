@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import pizza_gui.model.Ingredient;
 import pizza_gui.model.Pizza;
 import pizza_gui.model.PizzaModel;
+import pizza_gui.service.PizzaService;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -21,24 +22,9 @@ public class PizzaController {
         // Aby dodać kolekcje kontrolek FXML korzystamy z ObservableList
     private ObservableList<PizzaModel> pizzas = FXCollections.observableArrayList();
 
-    // Wprowadź pizze z enum Pizza do listy pizzas------------------------------------
+    // obiekt klasy PizzaService
+    private PizzaService pizzaService = new PizzaService();
 
-    private void addPizzas(){
-        // type -> WEGE lub SPICY
-        for (Pizza pizza : Pizza.values()){
-            pizzas.add(new PizzaModel(
-                    pizza.getName(),
-                    pizza.getIngredients().stream().map(Ingredient::getName).collect(Collectors.joining(",")),
-                    (pizza.getIngredients().stream().anyMatch(Ingredient::isSpicy) ? "ostra " : " ")
-                            +
-                    (pizza.getIngredients().stream().noneMatch(Ingredient::isMeat) ? "wege " : " "),
-                    pizza.getIngredients().stream().mapToDouble(Ingredient::getPrice).sum()
-            ));
-        }
-    }
-
-
-    //--------------------------------------------------------------------------------
 
     @FXML
     private TableView<PizzaModel> tblPizza;                 // Klasa modelu

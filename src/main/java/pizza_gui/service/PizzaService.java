@@ -71,14 +71,14 @@ public class PizzaService {
        //obniżenie ceny
         pizzas.get(randomIndex).setPrice(pizzas.get(randomIndex).getPrice() * 0.8);
         // wypisanie nazwy pizzy przy Labelu
-        randomPizza.setText(pizzaOfTheDay.getName() + " - " + pizzaOfTheDay.getPrice() + " zł");
+        randomPizza.setText(String.format("%s - %.2f zł", pizzaOfTheDay.getName(),pizzaOfTheDay.getPrice()));
     }
 
     private List<Integer> choices = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9,10));
 
 
     // metoda do przenoszenia pizzy do koszyka
-    public void addToBasket(TableView<PizzaModel> tblPizza){
+    public void addToBasket(TableView<PizzaModel> tblPizza, TextArea taBasket){
         // odczyt ktory wiersz w tabelce zostal oznaczony
         PizzaModel selectedPizza = tblPizza.getSelectionModel().getSelectedItem();
         // utworzenie okna kontekstowego do zamówienia wybranej ilości pizzy
@@ -90,8 +90,20 @@ public class PizzaService {
         // okno zostaje wyświetlone i utrzymane na ekranie i zwróci wartość po wciśnięciu przycisku
         Optional<Integer> result = addToBasketDialog.showAndWait();
         // gdy wybrano OK
-        result.ifPresent(quantity -> System.out.println("Pizza: " + selectedPizza.getName() + ", ilość: " + quantity));
+        result.ifPresent(quantity -> taBasket.appendText(
+                String.format("%-15s %5d szt. %10.2f zł\n",
+                        selectedPizza.getName(),
+                        quantity,
+                        selectedPizza.getPrice() * quantity)
+                ));
 
+    }
+
+    public void clearOrder(TextArea taBasket, TextField tfAddress, TextField tfPhone, Label lblSum){
+        taBasket.clear();
+        tfAddress.clear();
+        tfPhone.clear();
+        lblSum.setText("KWOTA DO ZAPŁATY: 0.00 ZŁ");
     }
 
 }

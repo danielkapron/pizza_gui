@@ -25,6 +25,8 @@ public class PizzaController {
     // obiekt klasy PizzaService
     private PizzaService pizzaService = new PizzaService();
 
+    @FXML
+    private Label lblSum;
 
     @FXML
     private TableView<PizzaModel> tblPizza;                 // Klasa modelu
@@ -55,7 +57,7 @@ public class PizzaController {
 
     @FXML
     void clearAction(MouseEvent event) {
-        System.out.println("Dziękujemy za złożenie zamówienia!");
+      pizzaService.clearOrder(taBasket, tfAddress, tfPhone, lblSum);
     }
 
     @FXML
@@ -65,7 +67,7 @@ public class PizzaController {
 
     @FXML
     void selectPizzaAction(MouseEvent mouseEvent) {
-        pizzaService.addToBasket(tblPizza);
+        pizzaService.addToBasket(tblPizza, taBasket);
     }
 
     // konsturktor -> inicjalizacja GUI

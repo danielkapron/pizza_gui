@@ -67,10 +67,10 @@
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
                <font>
-                  <Font size="24.0" />
+                  <Font name="Consolas" size="24.0" />
                </font>
             </TextArea>
-            <Label alignment="CENTER" text="KWOTA DO ZAPŁATY:">
+            <Label fx:id="lblSum" alignment="CENTER" text="KWOTA DO ZAPŁATY: 0.00 ZŁ">
                <VBox.margin>
                   <Insets left="150.0" />
                </VBox.margin>

@@ -10,9 +10,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        // FXMLLoader -> załadowanie pliku fxml i zwrócenie jako obiekt Paret
+        Parent root = FXMLLoader.load(getClass().getResource("/view/pizzaView.fxml"));
+        // utwrorzenie obiektu scene wypełnionego wikiem aplikacji
+        Scene scene = new Scene(root);
+        // ustawienie obiektu Scene w Stage'u, czyli oknie aplikacji
+        primaryStage.setTitle("Pizza");
+        primaryStage.setScene(scene);
+        // wyświetlenie i zatrzymanie okna aplikacji
         primaryStage.show();
     }
 

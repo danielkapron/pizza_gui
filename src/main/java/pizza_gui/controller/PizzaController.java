@@ -63,4 +63,20 @@ public class PizzaController {
         System.out.println("Koszyk wyczyszczony");
     }
 
+    @FXML
+    void selectPizzaAction(MouseEvent mouseEvent) {
+        pizzaService.addToBasket(tblPizza);
+    }
+
+    // konsturktor -> inicjalizacja GUI
+
+    public void initialize(){
+        // wywołanie metod zaimplementowanych w logice biznesowej aplikacji
+       pizzas = pizzaService.addPizzas(pizzas);
+       pizzaService.insertPizzasToTable(tblPizza, tcName, tcIngredients, tcType, tcPrice, pizzas);
+       pizzaService.pizzaOfTheDayGenerator(pizzas, lblRandomPizza);
+    }
+
+
+
 }

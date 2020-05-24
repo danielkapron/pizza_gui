@@ -18,7 +18,7 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="1080.0" prefWidth="1949.0" spacing="30.0">
+      <VBox prefHeight="1080.0" prefWidth="1949.0" spacing="30.0" style="-fx-background-color: lightyellow;">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="MENU">
                <font>
@@ -34,7 +34,7 @@
                   <TableColumn prefWidth="100.0" text="CENA" />
               </columns>
             </TableView>
-            <AnchorPane prefHeight="328.0" prefWidth="960.0">
+            <AnchorPane prefHeight="328.0" prefWidth="960.0" style="-fx-background-color: lightyellow;">
                <children>
                   <ImageView fitHeight="239.0" fitWidth="374.0" layoutX="562.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="53.859527587890625" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="54.0">
                      <image>
@@ -43,19 +43,19 @@
                   </ImageView>
                   <Label layoutX="140.0" layoutY="54.0" text="PIZZA DNIA" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0">
                      <font>
-                        <Font size="48.0" />
+                        <Font name="System Bold" size="48.0" />
                      </font>
                   </Label>
                   <Label layoutX="163.0" layoutY="204.0" text="-losowa-" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="180.0">
                      <font>
-                        <Font size="36.0" />
+                        <Font name="System Bold Italic" size="36.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
          </children>
       </VBox>
-      <VBox prefHeight="1080.0" prefWidth="1949.0" spacing="30.0">
+      <VBox prefHeight="1080.0" prefWidth="1949.0" spacing="30.0" style="-fx-background-color: lightyellow;">
          <children>
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="KOSZYK">
                <font>
@@ -63,10 +63,13 @@
                </font>
             </Label>
             <Separator prefWidth="200.0" />
-            <TextArea prefHeight="520.0" prefWidth="660.0">
+            <TextArea editable="false" prefHeight="520.0" prefWidth="660.0" promptText="TWÓJ KOSZYK JEST PUSTY">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
             </TextArea>
             <Label alignment="CENTER" text="KWOTA DO ZAPŁATY:">
                <VBox.margin>
@@ -92,19 +95,19 @@
                   <Font size="24.0" />
                </font>
             </TextField>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="48.0" prefWidth="660.0">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="753.0" text="ZAMÓW">
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="753.0" style="-fx-background-color: lightgreen; -fx-border-color: black;" text="ZAMÓW">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="753.0" text="WYCZYŚĆ">
+                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="753.0" style="-fx-background-color: E77B7B; -fx-border-color: black;" text="WYCZYŚĆ">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                   </Button>
                </children>

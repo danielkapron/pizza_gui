@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -135,6 +136,7 @@ public class PizzaService {
         alert.setHeaderText("Potwierdznie zamówienia");
         alert.setContentText("Twoje zamówienie: \n" + taBasket.getText() + "\nDo zapłaty: " + amount + " zł");
         alert.showAndWait();
+        saveDataFile(tfAddress, tfPhone, taBasket);
         clearOrder(taBasket, tfAddress, tfPhone, lblSum);
         } else {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -158,7 +160,7 @@ public class PizzaService {
             alert.showAndWait();
         }
     }
-        public void saveDataFile(TextField tfAddress, TextField tfPhone, TextArea taBaket) throws FileNotFoundException {
+        public void saveDataFile(TextField tfAddress, TextField tfPhone, TextArea taBaket) {
         // data i czas zamowienia
             // adres dostawy
             // telefon
@@ -167,22 +169,26 @@ public class PizzaService {
             //f zawartosc koszyka
             // kwota do zaplaty
 
-            FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("plik tekstowy (*.txt", "*.txt");
-            fileChooser.getExtensionFilters().add(exFilter);
-
-            File file = fileChooser.showSaveDialog(null);
-
-            PrintWriter printWriter = new PrintWriter(file);
-            printWriter.println("POTWIERDZENIE ZAMÓIENIA");
-            LocalDateTime dateTime = LocalDateTime.now();
-            printWriter.println("Data i czas zamówienia" + dateTime);
-            printWriter.println("Adres dostawy: " + tfAddress.getText());
-            printWriter.println("Telefon kontaktowy: " + tfPhone.getText());
-            printWriter.println("Czas dostawy" + dateTime.plusMinutes(45));
-            printWriter.println("Zamówione produkty: \n" + taBaket.getText());
-            printWriter.println("Suma do zapłąty: " + amount +  " zł");
-            printWriter.close();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+           
+            try {
+                FileChooser fileChooser = new FileChooser();
+                FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("plik tekstowy (*.txt", "*.txt");
+                fileChooser.getExtensionFilters().add(exFilter);
+                File file = fileChooser.showSaveDialog(null);
+                PrintWriter printWriter = new PrintWriter(file);
+                printWriter.println("POTWIERDZENIE ZAMÓIENIA");
+                LocalDateTime dateTime = LocalDateTime.now();
+                printWriter.println("Data i czas zamówienia: " + dateTime.format(dtf)); // data do sformatowanaia dd.mm.YYYY hh:mm
+                printWriter.println("Adres dostawy: " + tfAddress.getText());
+                printWriter.println("Telefon kontaktowy: " + tfPhone.getText());
+                printWriter.println("Czas dostawy: " + dateTime.plusMinutes(45).format(dtf));
+                printWriter.println("Zamówione produkty: \n" + taBaket.getText());
+                printWriter.println("Suma do zapłaty: " + amount + " zł");
+                printWriter.close();
+            } catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
         }
 
 

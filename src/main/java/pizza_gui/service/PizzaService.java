@@ -9,6 +9,7 @@ import pizza_gui.model.PizzaModel;
 
 import java.text.NumberFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class PizzaService {
@@ -101,12 +102,22 @@ public class PizzaService {
 
     }
 
+
     public void clearOrder(TextArea taBasket, TextField tfAddress, TextField tfPhone, Label lblSum){
         taBasket.clear();
         tfAddress.clear();
         tfPhone.clear();
         amount = 0;
         lblSum.setText("KWOTA DO ZAPŁATY: 0.00 ZŁ");
+    }
+
+    public boolean isPhoneValid(String phone){
+        return Pattern.matches("(^([0-9]{3}[-]{1}){2}[0-9]{3}$)|(^[0-9]{9}$)", phone);
+    }
+
+    public boolean isAddressValid(String address){
+        return Pattern.matches("^[au][l][\\.]\\s{0,1}[A-Za-złąęśćźżóń\\d\\.\\s]{1,}\\s{1}\\d{1,}[A-Za-z]{0,}[\\/]{0,1}\\d{0,}[,]\\s{0,1}\\d{2}[-]\\d{3}\\s{1}[A-Za-złąęśćźżóń\\s\\-]{2,}$\n" +
+                "\n", address);
     }
 
 

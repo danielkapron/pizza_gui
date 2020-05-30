@@ -78,7 +78,7 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <TextField fx:id="tfAddress" promptText="WPROWADŹ ADRES DOSTAWY">
+            <TextField fx:id="tfAddress" promptText="WPROWADŹ ADRES DOSTAWY[ulica, kod pocztowy, miasto)">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
@@ -86,7 +86,7 @@
                   <Font size="24.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfPhone" promptText="WPROWADŹ NUMER TELEFONU">
+            <TextField fx:id="tfPhone" promptText="WPROWADŹ NUMER TELEFONU[xxx-xxx-xxx]">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>

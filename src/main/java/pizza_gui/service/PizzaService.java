@@ -3,11 +3,19 @@ package pizza_gui.service;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import pizza_gui.model.Ingredient;
 import pizza_gui.model.Pizza;
 import pizza_gui.model.PizzaModel;
 
+import javax.xml.soap.Text;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -116,15 +124,66 @@ public class PizzaService {
     }
 
     public boolean isAddressValid(String address){
-        return Pattern.matches("^[au][l][\\.]\\s{0,1}[A-Za-złąęśćźżóń\\d\\.\\s]{1,}\\s{1}\\d{1,}[A-Za-z]{0,}[\\/]{0,1}\\d{0,}[,]\\s{0,1}\\d{2}[-]\\d{3}\\s{1}[A-Za-złąęśćźżóń\\s\\-]{2,}$\n" +
-                "\n", address);
+        return Pattern.matches("^[au][l][\\.]\\s{0,1}[A-Za-złąęśćźżóń\\d\\.\\s]{1,}\\s{1}\\d{1,}[A-Za-z]{0,}[\\/]{0,1}\\d{0,}[,]\\s{0,1}\\d{2}[-]\\d{3}\\s{1}[A-Za-złąęśćźżóń\\s\\-]{2,}$", address);
     }
 
+    //okno dialogowe typu information albo error potweirdzajace lub odrzcuajace
+    public void getOrder(TextField tfPhone, TextField tfAddress, TextArea taBasket, Label lblSum){
+        if(isPhoneValid(tfPhone.getText()) && isAddressValid(tfAddress.getText()) && !taBasket.getText().equals("")){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Zamówienie");
+        alert.setHeaderText("Potwierdznie zamówienia");
+        alert.setContentText("Twoje zamówienie: \n" + taBasket.getText() + "\nDo zapłaty: " + amount + " zł");
+        alert.showAndWait();
+        clearOrder(taBasket, tfAddress, tfPhone, lblSum);
+        } else {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Zamówienie");
+            alert.setHeaderText("Błędne dane zamówienia");
+            String validationResult = "Wprowadziłeś niepoprawne dane w następujących polach: ";
+            if(!isPhoneValid(tfPhone.getText())){
+                validationResult += "Błędny numer telefonu ";
+            }
+            if(!isPhoneValid(tfPhone.getText()) && isAddressValid(tfAddress.getText())){
+                validationResult += "";
+            }
+            if(isAddressValid(tfAddress.getText())){
+                validationResult += "Błędny adres dostawy ";
+            }
+            String emptyBasket = "";
+            if(taBasket.getText().equals("")){
+                emptyBasket = "\nTwój koszyk nie może być pusty.";
+            }
+            alert.setContentText(validationResult + emptyBasket);
+            alert.showAndWait();
+        }
+    }
+        public void saveDataFile(TextField tfAddress, TextField tfPhone, TextArea taBaket) throws FileNotFoundException {
+        // data i czas zamowienia
+            // adres dostawy
+            // telefon
+            // czas dostawy to data i czas zamoweinai + 45min
+            // ------------------------------------------------
+            //f zawartosc koszyka
+            // kwota do zaplaty
 
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("plik tekstowy (*.txt", "*.txt");
+            fileChooser.getExtensionFilters().add(exFilter);
 
+            File file = fileChooser.showSaveDialog(null);
 
-
-
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.println("POTWIERDZENIE ZAMÓIENIA");
+            LocalDateTime dateTime = LocalDateTime.now();
+            printWriter.println("Data i czas zamówienia" + dateTime);
+            printWriter.println("Adres dostawy: " + tfAddress.getText());
+            printWriter.println("Telefon kontaktowy: " + tfPhone.getText());
+            printWriter.println("Czas dostawy" + dateTime.plusMinutes(45));
+            printWriter.println("Zamówione produkty: \n" + taBaket.getText());
+            printWriter.println("Suma do zapłąty: " + amount +  " zł");
+            printWriter.close();
+        }
 
 
 }

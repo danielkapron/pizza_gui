@@ -62,7 +62,7 @@ public class PizzaController {
 
     @FXML
     void orderAction(MouseEvent event) {
-        System.out.println("Koszyk wyczyszczony");
+        pizzaService.getOrder(tfPhone, tfAddress, taBasket, lblSum);
     }
 
     @FXML

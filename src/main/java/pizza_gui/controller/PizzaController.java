@@ -3,11 +3,7 @@ package pizza_gui.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import pizza_gui.model.Ingredient;
 import pizza_gui.model.Pizza;
@@ -24,6 +20,11 @@ public class PizzaController {
 
     // obiekt klasy PizzaService
     private PizzaService pizzaService = new PizzaService();
+
+    @FXML
+    public Label lblClock;
+    @FXML
+    public ProgressBar pbExit;
 
     @FXML
     private Label lblSum;
@@ -77,6 +78,7 @@ public class PizzaController {
        pizzas = pizzaService.addPizzas(pizzas);
        pizzaService.insertPizzasToTable(tblPizza, tcName, tcIngredients, tcType, tcPrice, pizzas);
        pizzaService.pizzaOfTheDayGenerator(pizzas, lblRandomPizza);
+       pizzaService.clock();
     }
 
 

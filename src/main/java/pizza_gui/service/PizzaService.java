@@ -170,7 +170,7 @@ public class PizzaService {
             // kwota do zaplaty
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-           
+
             try {
                 FileChooser fileChooser = new FileChooser();
                 FileChooser.ExtensionFilter exFilter = new FileChooser.ExtensionFilter("plik tekstowy (*.txt", "*.txt");
@@ -189,6 +189,27 @@ public class PizzaService {
             } catch (FileNotFoundException e){
                 e.printStackTrace();
             }
+        }
+
+        public void clock(Label lblClock){
+        // IMPLEMENTACJA ------------------------------------------------
+        Runnable target;
+        Thread clockThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                while (true){               // pętla nieskończona
+                    try {
+                       lblClock.setText(LocalDateTime.now().format(dateTimeFormatter));
+                        Thread.currentThread().sleep(1000);   // uśpienie wątku clock thread na ls
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        // ---------------------------------------------------------------
+        clockThread.start();                    // uruchomienie wątku clock thread (wywołanie metody run() wykonywanej przez inny procesor)
         }
 
 

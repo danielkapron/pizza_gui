@@ -78,7 +78,8 @@ public class PizzaController {
        pizzas = pizzaService.addPizzas(pizzas);
        pizzaService.insertPizzasToTable(tblPizza, tcName, tcIngredients, tcType, tcPrice, pizzas);
        pizzaService.pizzaOfTheDayGenerator(pizzas, lblRandomPizza);
-       pizzaService.clock();
+       pizzaService.clock(lblClock);
+       pizzaService.timeToExit(pbExit);
     }
 
 

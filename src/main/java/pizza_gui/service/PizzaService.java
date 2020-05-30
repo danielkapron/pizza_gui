@@ -1,5 +1,6 @@
 package pizza_gui.service;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -200,7 +201,10 @@ public class PizzaService {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                 while (true){               // pętla nieskończona
                     try {
-                       lblClock.setText(LocalDateTime.now().format(dateTimeFormatter));
+                        String result = LocalDateTime.now().format(dateTimeFormatter);
+                        Platform.runLater(() -> {
+                            lblClock.setText(result);
+                        });
                         Thread.currentThread().sleep(1000);   // uśpienie wątku clock thread na ls
                     } catch (InterruptedException e){
                         e.printStackTrace();
@@ -212,5 +216,23 @@ public class PizzaService {
         clockThread.start();                    // uruchomienie wątku clock thread (wywołanie metody run() wykonywanej przez inny procesor)
         }
 
+            public void timeToExit(ProgressBar pbExit){
+            Thread pbThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for(int i = 0; i <100 ; i++){
+                        try {
+                            Thread.currentThread().sleep(1000);
+                        } catch (InterruptedException e){
+                            e.printStackTrace();
+                        }
+                        double progress = i /100.0;
+                        pbExit.setProgress(progress);
+                    }
+                    Platform.exit();  // automatyczne zamknięcie aplikacji
+                }
+            });
+            pbThread.start();
+            }
 
 }
